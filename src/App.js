@@ -1,26 +1,36 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import "./App.css";
+import DarkSky from "./DarkSky";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default class App extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            weather: {}
+        };
+    }
+    componentDidMount() {
+        let proxy = "https://cors-anywhere.herokuapp.com/";
+        let darkSkyApi =
+            "https://api.darksky.net/forecast/" +
+            DarkSky.secret +
+            "/37.8267,-122.4233";
+        let api = proxy + darkSkyApi;
+        fetch(api)
+            .then(res => res.json())
+            .then(data => {
+                this.setState({ weather: data });
+                console.log(data);
+            })
+            .catch(err => {
+                console.log("oops error occurred during fetch");
+            });
+    }
+    render() {
+        return (
+            <div>
+                <h1>weatherApp</h1>
+            </div>
+        );
+    }
 }
-
-export default App;
