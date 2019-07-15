@@ -1,9 +1,9 @@
 import React from "react";
 
-export default function Title({ title }) {
+export default function Title() {
     return (
         <div>
-            <h3 className="title">{title}</h3>
+            <h1>React Weather App</h1>
         </div>
     );
 }
