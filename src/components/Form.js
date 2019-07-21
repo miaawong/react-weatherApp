@@ -1,12 +1,22 @@
-import React from "react";
+import React, { useContext } from "react";
+import { FaLocationArrow } from "react-icons/fa";
+import { WeatherContext } from "../context";
 
-export default function Form(props) {
-    console.log(props);
+export default function Form() {
+    const context = useContext(WeatherContext);
+    const { getGeoLocation } = context;
+
     return (
-        <form onSubmit={(props.fetchWeather, props.fetchCoords)}>
-            <input type="text" name="city" placeholder="city" />
-            <input type="text" name="country" placeholder="country" />
-            <button>Go</button>
-        </form>
+        <>
+            <button onClick={getGeoLocation}>
+                <FaLocationArrow /> Use my Location
+            </button>
+            <form>
+                <br />
+                <input type="text" name="city" placeholder="city" />
+                <input type="text" name="country" placeholder="country" />
+                <button>Go</button>
+            </form>
+        </>
     );
 }
