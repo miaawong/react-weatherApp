@@ -5,12 +5,13 @@ const WeatherContext = React.createContext();
 
 class WeatherProvider extends Component {
     state = {
-        location: {},
+        location: "",
         loading: false,
-        latitude: null,
-        longitude: null,
-        weather: {}
+        weather: {},
+        latitude: 0,
+        longitude: 0
     };
+
     // fetch weather from dark skies
     fetchWeather() {
         let { latitude, longitude } = this.state;
@@ -51,51 +52,28 @@ class WeatherProvider extends Component {
             });
     }
     getGeoLocation = () => {
-        // const options = {
-        //     enableHighAccuracy: true,
-        //     timeout: 5000,
-        //     maximumAge: 0
-        // };
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(geoSuccess);
-        }
-
-        function geoSuccess(position) {
-            let latitude = position.coords.latitude;
-            let longitude = position.coords.longitude;
-            // this.setState({
-            //     latitude,
-            //     longitude,
-            //     loading: false
-            // });
-            console.log(latitude, longitude);
-            // since location is retrieve with a callback, we fetch inside the callback
-            // this.fetchWeather();
-            // this.fetchLocation();
-        }
-        // const geoError = err => {
-        //     switch (err.code) {
-        //         case err.PERMISSION_DENIED:
-        //             alert(
-        //                 "Seemed like you denied permission to access your current location, please search instead."
-        //             );
-        //             break;
-        //         case err.POSITION_UNAVAILABLE:
-        //             alert(`${err.code}: Position unavailable`);
-        //             break;
-        //         case err.TIMEOUT:
-        //             alert(`${err.code}: timed out`);
-        //             break;
-        //         case err.UNKNOWN_ERROR:
-        //             alert(`${err.code}: Don't know what happened here`);
-        //     }
+        const geolocation = navigator.geolocation;
+        geolocation.getCurrentPosition(
+            position => {
+                let latitude = position.coords.latitude;
+                let longitude = position.coords.longitude;
+                this.setState({
+                    latitude,
+                    longitude
+                });
+                this.fetchWeather();
+                this.fetchLocation();
+            },
+            () => {
+                console.log("error");
+            }
+        );
     };
 
-    // sayHello = () => {
-    //     console.log("herrrlo");
-    // };
-
     render() {
+        let { latitude, longitude, location } = this.state;
+
+        console.log(latitude, longitude, location);
         return (
             <WeatherContext.Provider
                 value={{
@@ -103,7 +81,6 @@ class WeatherProvider extends Component {
                     getGeoLocation: this.getGeoLocation,
                     fetchWeather: this.fetchWeather,
                     fetchLocation: this.fetchLocation
-                    // sayHello: this.sayHello
                 }}
             >
                 {this.props.children}
