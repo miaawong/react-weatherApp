@@ -12,7 +12,8 @@ class WeatherProvider extends Component {
         icon: "",
         latitude: 0,
         longitude: 0,
-        tempIcon: ""
+        tempIcon: "",
+        searchString: ""
     };
 
     // fetch weather from dark skies
@@ -68,7 +69,6 @@ class WeatherProvider extends Component {
             });
     }
     getGeoLocation = () => {
-        let { loading } = this.state;
         this.setState({
             loading: true
         });
@@ -91,10 +91,32 @@ class WeatherProvider extends Component {
         );
     };
 
-    render() {
-        let { latitude, longitude, location, tempIcon, icon } = this.state;
+    handleInputChange = e => {
+        e.preventDefault();
+        if (e.target.value)
+            this.setState({
+                searchString: e.target.value
+            });
+        this.search();
+    };
 
-        console.log(latitude, longitude, location, tempIcon, icon);
+    search() {
+        let { searchString } = this.state;
+        fetch(
+            `https://maps.googleapis.com/maps/api/geocode/json?input=${searchString}&key=${
+                DarkSky.googleKey
+            }`
+        )
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+            });
+    }
+
+    render() {
+        let { latitude, longitude, location, searchString } = this.state;
+
+        console.log(latitude, longitude, location, searchString);
         return (
             <WeatherContext.Provider
                 value={{
@@ -102,7 +124,8 @@ class WeatherProvider extends Component {
                     getGeoLocation: this.getGeoLocation,
                     fetchWeather: this.fetchWeather,
                     fetchLocation: this.fetchLocation,
-                    handleLoading: this.handleLoading
+                    handleInputChange: this.handleInputChange,
+                    autoSearch: this.autoSearch
                 }}
             >
                 {this.props.children}
