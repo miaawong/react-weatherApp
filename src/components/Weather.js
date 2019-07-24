@@ -7,18 +7,15 @@ export default function Location() {
     const { temperature, summary, icon } = context;
 
     return (
-        <div className="col my-3">
-            <h3>
-                Current Weather:
-                <div className="col">{temperature} °F</div>
-                <div className="col">{summary}</div>
-                <Skycons
-                    color="white"
-                    icon={icon}
-                    autoplay={true}
-                    style={{ width: "10%", height: "10%" }}
-                />
-            </h3>
+        <div>
+            <h2>
+                <div>
+                    <Skycons color="white" icon={icon} autoplay={true} />
+                    {temperature} °F
+                </div>
+                <br />
+                <div className="my-5">{summary}</div>
+            </h2>
         </div>
     );
 }

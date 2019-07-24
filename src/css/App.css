@@ -20,6 +20,11 @@ button:hover {
     border-radius: 5px;
 }
 
-.icon {
-    color: white;
+.icons {
+    width: 10%;
+    height: 10%;
+}
+
+div {
+    display: inline;
 }

@@ -4,8 +4,8 @@ export default function Location() {
     const context = useContext(WeatherContext);
     const { location } = context;
     return (
-        <div className="col mt-4">
-            <h3>Current Location: {location}</h3>
+        <div>
+            <h2>Current Location: {location}</h2>
         </div>
     );
 }

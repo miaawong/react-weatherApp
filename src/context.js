@@ -6,7 +6,7 @@ const WeatherContext = React.createContext();
 class WeatherProvider extends Component {
     state = {
         location: "",
-        loading: false,
+        loading: "",
         temperature: null,
         summary: "",
         icon: "",
@@ -38,11 +38,11 @@ class WeatherProvider extends Component {
                     tempIcon: data.currently.icon
                 });
                 // console.log(data);
+                this.findIcon();
             })
             .catch(err => {
                 console.log("oops error occurred during fetch");
             });
-        this.findIcon();
     }
     findIcon = () => {
         let { tempIcon, icon } = this.state;
@@ -68,6 +68,10 @@ class WeatherProvider extends Component {
             });
     }
     getGeoLocation = () => {
+        let { loading } = this.state;
+        this.setState({
+            loading: true
+        });
         const geolocation = navigator.geolocation;
         geolocation.getCurrentPosition(
             position => {
@@ -75,7 +79,8 @@ class WeatherProvider extends Component {
                 let longitude = position.coords.longitude;
                 this.setState({
                     latitude,
-                    longitude
+                    longitude,
+                    loading: false
                 });
                 this.fetchWeather();
                 this.fetchLocation();
@@ -96,7 +101,8 @@ class WeatherProvider extends Component {
                     ...this.state,
                     getGeoLocation: this.getGeoLocation,
                     fetchWeather: this.fetchWeather,
-                    fetchLocation: this.fetchLocation
+                    fetchLocation: this.fetchLocation,
+                    handleLoading: this.handleLoading
                 }}
             >
                 {this.props.children}
