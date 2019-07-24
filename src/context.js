@@ -7,9 +7,12 @@ class WeatherProvider extends Component {
     state = {
         location: "",
         loading: false,
-        weather: {},
+        temperature: null,
+        summary: "",
+        icon: "",
         latitude: 0,
-        longitude: 0
+        longitude: 0,
+        tempIcon: ""
     };
 
     // fetch weather from dark skies
@@ -29,13 +32,26 @@ class WeatherProvider extends Component {
         fetch(api)
             .then(res => res.json())
             .then(data => {
-                this.setState({ weather: data.currently });
-                console.log(data);
+                this.setState({
+                    temperature: data.currently.temperature,
+                    summary: data.currently.summary,
+                    tempIcon: data.currently.icon
+                });
+                // console.log(data);
             })
             .catch(err => {
                 console.log("oops error occurred during fetch");
             });
+        this.findIcon();
     }
+    findIcon = () => {
+        let { tempIcon, icon } = this.state;
+        icon = tempIcon.toUpperCase().replace(/-/g, "_");
+        console.log(icon);
+        this.setState({
+            icon
+        });
+    };
     // reverse geolocation from google map api
     fetchLocation() {
         let { latitude, longitude } = this.state;
@@ -71,9 +87,9 @@ class WeatherProvider extends Component {
     };
 
     render() {
-        let { latitude, longitude, location } = this.state;
+        let { latitude, longitude, location, tempIcon, icon } = this.state;
 
-        console.log(latitude, longitude, location);
+        console.log(latitude, longitude, location, tempIcon, icon);
         return (
             <WeatherContext.Provider
                 value={{

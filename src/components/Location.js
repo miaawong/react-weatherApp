@@ -1,9 +1,11 @@
-import React from "react";
-
-export default function Location({ location }) {
+import React, { useContext } from "react";
+import { WeatherContext } from "../context";
+export default function Location() {
+    const context = useContext(WeatherContext);
+    const { location } = context;
     return (
-        <div>
-            <h3>{location}</h3>
+        <div className="col mt-4">
+            <h3>Current Location: {location}</h3>
         </div>
     );
 }

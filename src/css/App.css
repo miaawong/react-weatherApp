@@ -1,0 +1,25 @@
+:root {
+    --mainWhite: #fff;
+    --mainGrey: #343838;
+    --mainLightGrey: #aeb8c3;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--mainGrey) !important;
+    color: var(--mainWhite) !important;
+}
+
+.button {
+    border-radius: 5px;
+}
+button:hover {
+    background: var(--mainLightGrey);
+}
+.form {
+    border-radius: 5px;
+}
+
+.icon {
+    color: white;
+}
