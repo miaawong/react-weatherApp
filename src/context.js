@@ -17,7 +17,7 @@ class WeatherProvider extends Component {
     };
 
     // fetch weather from dark skies
-    fetchWeather() {
+    fetchWeather = () => {
         let { latitude, longitude } = this.state;
         // console.log("set stated" + longitude, latitude);
         let proxy = "https://cors-anywhere.herokuapp.com/";
@@ -44,7 +44,7 @@ class WeatherProvider extends Component {
             .catch(err => {
                 console.log("oops error occurred during fetch");
             });
-    }
+    };
     findIcon = () => {
         let { tempIcon, icon } = this.state;
         icon = tempIcon.toUpperCase().replace(/-/g, "_");
@@ -54,7 +54,7 @@ class WeatherProvider extends Component {
         });
     };
     // reverse geolocation from google map api
-    fetchLocation() {
+    fetchLocation = () => {
         let { latitude, longitude } = this.state;
         let key = DarkSky.googleKey;
         let latlng = `${latitude},${longitude}`;
@@ -67,7 +67,7 @@ class WeatherProvider extends Component {
                 // accessing the data to retrieve location
                 this.setState({ location: data.results[2].formatted_address });
             });
-    }
+    };
     getGeoLocation = () => {
         this.setState({
             loading: true
@@ -101,7 +101,6 @@ class WeatherProvider extends Component {
 
     search = e => {
         e.preventDefault();
-
         let { searchString } = this.state;
         let proxy = "https://cors-anywhere.herokuapp.com/";
         fetch(
@@ -111,17 +110,20 @@ class WeatherProvider extends Component {
         )
             .then(res => res.json())
             .then(data => {
+                this.setState({
+                    latitude: data.results[0].geometry.location.lat,
+                    longitude: data.results[0].geometry.location.lng,
+                    location: data.results[0].formatted_address
+                });
                 console.log(data);
+                this.fetchWeather();
             });
     };
-    sayHello = e => {
-        e.preventDefault();
-        console.log("hi");
-    };
-    render() {
-        let { latitude, longitude, location, searchString } = this.state;
 
-        console.log(latitude, longitude, location, searchString);
+    render() {
+        let { latitude, longitude, location } = this.state;
+
+        console.log(latitude, longitude, location);
         return (
             <WeatherContext.Provider
                 value={{
@@ -130,8 +132,7 @@ class WeatherProvider extends Component {
                     fetchWeather: this.fetchWeather,
                     fetchLocation: this.fetchLocation,
                     handleInputChange: this.handleInputChange,
-                    search: this.search,
-                    sayHello: this.sayHello
+                    search: this.search
                 }}
             >
                 {this.props.children}

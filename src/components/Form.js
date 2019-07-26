@@ -21,7 +21,7 @@ export default function Form() {
                         id="searchInput"
                         onChange={handleInputChange}
                     />
-
+                    {/* <button onClick={sayHello}> hello</button> */}
                     <button>Go</button>
                 </form>
             </section>
