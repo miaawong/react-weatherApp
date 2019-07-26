@@ -119,7 +119,7 @@ class WeatherProvider extends Component {
                 location: json.results[0].formatted_address
             });
             console.log(json);
-            // this.fetchWeather();
+            this.fetchWeather();
         } catch (error) {
             console.log(error);
         }
