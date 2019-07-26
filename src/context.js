@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import DarkSky from "./DarkSky";
-import { async } from "q";
 
 const WeatherContext = React.createContext();
 
