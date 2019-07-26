@@ -20,15 +20,15 @@ class WeatherProvider extends Component {
     fetchWeather = () => {
         let { latitude, longitude } = this.state;
         // console.log("set stated" + longitude, latitude);
-        // let proxy = "https://cors-anywhere.herokuapp.com/";
-        let api =
+        let proxy = "https://cors-anywhere.herokuapp.com/";
+        let darkSkyApi =
             "https://api.darksky.net/forecast/" +
             DarkSky.secret +
             "/" +
             latitude +
             "," +
             longitude;
-        // let api = proxy + darkSkyApi;
+        let api = proxy + darkSkyApi;
         // console.log(api);
         fetch(api)
             .then(res => res.json())
@@ -42,7 +42,7 @@ class WeatherProvider extends Component {
                 this.findIcon();
             })
             .catch(err => {
-                console.log("oops error occurred during fetch");
+                console.log("oops error occurred during fetchweather");
             });
     };
     findIcon = () => {
@@ -66,6 +66,9 @@ class WeatherProvider extends Component {
             .then(data => {
                 // accessing the data to retrieve location
                 this.setState({ location: data.results[2].formatted_address });
+            })
+            .catch(err => {
+                console.log("error happened in fetchLocation");
             });
     };
     getGeoLocation = () => {
@@ -83,7 +86,7 @@ class WeatherProvider extends Component {
                     loading: false
                 });
                 this.fetchWeather();
-                this.fetchLocation();
+                //  this.fetchLocation();
             },
             () => {
                 console.log("error");
@@ -110,10 +113,11 @@ class WeatherProvider extends Component {
         )
             .then(res => res.json())
             .then(data => {
+                let lat = data.results[0].geometry.location.lat;
                 this.setState({
-                    latitude: data.results[0].geometry.location.lat,
-                    longitude: data.results[0].geometry.location.lng,
-                    location: data.results[0].formatted_address
+                    latitude: lat
+                    // longitude: data.results[0].geometry.location.lng,
+                    // location: data.results[0].formatted_address
                 });
                 console.log(data);
                 this.fetchWeather();
