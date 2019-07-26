@@ -54,22 +54,19 @@ class WeatherProvider extends Component {
         });
     };
     // reverse geolocation from google map api
-    fetchLocation = () => {
+    fetchLocation = async () => {
         let { latitude, longitude } = this.state;
         let key = DarkSky.googleKey;
         let latlng = `${latitude},${longitude}`;
-
-        fetch(
-            `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latlng}&key=${key}`
-        )
-            .then(res => res.json())
-            .then(data => {
-                // accessing the data to retrieve location
-                this.setState({ location: data.results[2].formatted_address });
-            })
-            .catch(err => {
-                console.log("error happened in fetchLocation");
-            });
+        try {
+            let response = await fetch(
+                `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latlng}&key=${key}`
+            );
+            let data = await response.json();
+            this.setState({ location: data.results[2].formatted_address });
+        } catch (error) {
+            console.log(error);
+        }
     };
     getGeoLocation = () => {
         this.setState({
@@ -86,7 +83,7 @@ class WeatherProvider extends Component {
                     loading: false
                 });
                 this.fetchWeather();
-                //  this.fetchLocation();
+                this.fetchLocation();
             },
             () => {
                 console.log("error");
