@@ -113,11 +113,11 @@ class WeatherProvider extends Component {
                 }`
             );
             let json = await response.json();
-            // this.setState({
-            //     latitude: json.results[0].geometry.location.lat,
-            //     longitude: json.results[0].geometry.location.lng,
-            //     location: json.results[0].formatted_address
-            // });
+            this.setState({
+                latitude: json.results[0].geometry.location.lat,
+                longitude: json.results[0].geometry.location.lng,
+                location: json.results[0].formatted_address
+            });
             console.log(json);
             // this.fetchWeather();
         } catch (error) {
