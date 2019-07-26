@@ -10,7 +10,12 @@ export default function Location() {
         <div>
             <h2>
                 <div>
-                    <Skycons color="white" icon={icon} autoplay={true} />
+                    <Skycons
+                        color="white"
+                        icon={icon}
+                        autoplay={true}
+                        style={{ width: "5%", height: "5%" }}
+                    />
                     {temperature} °F
                 </div>
                 <br />
