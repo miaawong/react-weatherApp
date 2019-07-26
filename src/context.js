@@ -92,18 +92,20 @@ class WeatherProvider extends Component {
     };
 
     handleInputChange = e => {
-        e.preventDefault();
+        // e.preventDefault();
         if (e.target.value)
             this.setState({
                 searchString: e.target.value
             });
-        this.search();
     };
 
-    search() {
+    search = e => {
+        e.preventDefault();
+
         let { searchString } = this.state;
+        let proxy = "https://cors-anywhere.herokuapp.com/";
         fetch(
-            `https://maps.googleapis.com/maps/api/geocode/json?input=${searchString}&key=${
+            `${proxy}https://maps.googleapis.com/maps/api/place/textsearch/json?query=${searchString}&key=${
                 DarkSky.googleKey
             }`
         )
@@ -111,8 +113,11 @@ class WeatherProvider extends Component {
             .then(data => {
                 console.log(data);
             });
-    }
-
+    };
+    sayHello = e => {
+        e.preventDefault();
+        console.log("hi");
+    };
     render() {
         let { latitude, longitude, location, searchString } = this.state;
 
@@ -125,7 +130,8 @@ class WeatherProvider extends Component {
                     fetchWeather: this.fetchWeather,
                     fetchLocation: this.fetchLocation,
                     handleInputChange: this.handleInputChange,
-                    autoSearch: this.autoSearch
+                    search: this.search,
+                    sayHello: this.sayHello
                 }}
             >
                 {this.props.children}

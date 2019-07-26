@@ -4,7 +4,7 @@ import { WeatherContext } from "../context";
 
 export default function Form() {
     const context = useContext(WeatherContext);
-    const { getGeoLocation, handleInputChange, search } = context;
+    const { getGeoLocation, handleInputChange, search, sayHello } = context;
 
     return (
         <>
@@ -21,7 +21,8 @@ export default function Form() {
                         id="searchInput"
                         onChange={handleInputChange}
                     />
-                    <button className="button">Go</button>
+
+                    <button>Go</button>
                 </form>
             </section>
         </>
