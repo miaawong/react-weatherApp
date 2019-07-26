@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import DarkSky from "./DarkSky";
+import { async } from "q";
 
 const WeatherContext = React.createContext();
 
@@ -102,26 +103,24 @@ class WeatherProvider extends Component {
             });
     };
 
-    search = e => {
+    search = async e => {
         e.preventDefault();
         let { searchString } = this.state;
         let proxy = "https://cors-anywhere.herokuapp.com/";
-        fetch(
+        let response = await fetch(
             `${proxy}https://maps.googleapis.com/maps/api/place/textsearch/json?query=${searchString}&key=${
                 DarkSky.googleKey
             }`
-        )
-            .then(res => res.json())
-            .then(data => {
-                let lat = data.results[0].geometry.location.lat;
-                this.setState({
-                    latitude: lat
-                    // longitude: data.results[0].geometry.location.lng,
-                    // location: data.results[0].formatted_address
-                });
-                console.log(data);
-                this.fetchWeather();
+        );
+        let data = await response.json().then(data => {
+            this.setState({
+                latitude: data.results[0].geometry.location.lat,
+                longitude: data.results[0].geometry.location.lng,
+                location: data.results[0].formatted_address
             });
+            console.log(data);
+            this.fetchWeather();
+        });
     };
 
     render() {
