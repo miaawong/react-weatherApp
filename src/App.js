@@ -5,7 +5,6 @@ import Location from "./components/Location";
 import Form from "./components/Form";
 import "./css/bootstrap.min.css";
 import "./css/App.css";
-//import SearchBar from "./components/SearchBar";
 
 export default class App extends Component {
     render() {
