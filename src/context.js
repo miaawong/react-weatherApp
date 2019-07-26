@@ -20,15 +20,15 @@ class WeatherProvider extends Component {
     fetchWeather = () => {
         let { latitude, longitude } = this.state;
         // console.log("set stated" + longitude, latitude);
-        let proxy = "https://cors-anywhere.herokuapp.com/";
-        let darkSkyApi =
+        // let proxy = "https://cors-anywhere.herokuapp.com/";
+        let api =
             "https://api.darksky.net/forecast/" +
             DarkSky.secret +
             "/" +
             latitude +
             "," +
             longitude;
-        let api = proxy + darkSkyApi;
+        // let api = proxy + darkSkyApi;
         // console.log(api);
         fetch(api)
             .then(res => res.json())
