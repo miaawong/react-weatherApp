@@ -107,20 +107,23 @@ class WeatherProvider extends Component {
         e.preventDefault();
         let { searchString } = this.state;
         let proxy = "https://cors-anywhere.herokuapp.com/";
-        let response = await fetch(
-            `${proxy}https://maps.googleapis.com/maps/api/place/textsearch/json?query=${searchString}&key=${
-                DarkSky.googleKey
-            }`
-        );
-        let data = await response.json().then(data => {
+        try {
+            let response = await fetch(
+                `${proxy}https://maps.googleapis.com/maps/api/place/textsearch/json?query=${searchString}&key=${
+                    DarkSky.googleKey
+                }`
+            );
+            let json = await response.json();
             this.setState({
-                latitude: data.results[0].geometry.location.lat,
-                longitude: data.results[0].geometry.location.lng,
-                location: data.results[0].formatted_address
+                latitude: json.results[0].geometry.location.lat,
+                longitude: json.results[0].geometry.location.lng,
+                location: json.results[0].formatted_address
             });
-            console.log(data);
+            console.log(json);
             this.fetchWeather();
-        });
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     render() {
