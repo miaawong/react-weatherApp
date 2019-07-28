@@ -34,7 +34,7 @@ class WeatherProvider extends Component {
             .then(res => res.json())
             .then(data => {
                 this.setState({
-                    temperature: data.currently.temperature,
+                    temperature: data.currently.temperature + " °F",
                     summary: data.currently.summary,
                     tempIcon: data.currently.icon
                 });
@@ -92,7 +92,6 @@ class WeatherProvider extends Component {
     };
 
     handleInputChange = e => {
-        // e.preventDefault();
         if (e.target.value)
             this.setState({
                 searchString: e.target.value
@@ -113,7 +112,9 @@ class WeatherProvider extends Component {
             this.setState({
                 latitude: json.results[0].geometry.location.lat,
                 longitude: json.results[0].geometry.location.lng,
-                location: json.results[0].formatted_address
+                location: json.results[0].formatted_address,
+                //resets form
+                searchString: ""
             });
             console.log(json);
             this.fetchWeather();

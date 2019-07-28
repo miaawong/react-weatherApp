@@ -16,7 +16,7 @@ export default function Location() {
                         autoplay={true}
                         style={{ width: "5%", height: "5%" }}
                     />
-                    {temperature} °F
+                    {temperature}
                 </div>
                 <br />
                 <div className="my-5">{summary}</div>
