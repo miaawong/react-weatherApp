@@ -19,12 +19,9 @@ button:hover {
 .form {
     border-radius: 5px;
 }
-
-.icons {
-    width: 10%;
-    height: 10%;
+.weather {
+    font-size: 2rem;
 }
-
-div {
-    display: inline;
+h1 {
+    font-size: 3rem;
 }

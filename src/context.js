@@ -13,7 +13,9 @@ class WeatherProvider extends Component {
         latitude: 0,
         longitude: 0,
         tempIcon: "",
-        searchString: ""
+        searchString: "",
+        backgroundImg: "",
+        img: ""
     };
 
     // fetch weather from dark skies
@@ -118,15 +120,36 @@ class WeatherProvider extends Component {
             });
             console.log(json);
             this.fetchWeather();
+            this.fetchImg();
         } catch (error) {
             console.log(error);
         }
     };
+    fetchImg = async () => {
+        let { location } = this.state;
+        try {
+            let response = await fetch(
+                `https://api.unsplash.com/search/photos/?page=1&per_page=10&query=${location}&client_id=${
+                    DarkSky.applicationId
+                }`
+            );
+            let data = await response.json();
+            // turn response to json
+
+            // set data to imgs array
+            this.setState({
+                backgroundImg: data.results[0],
+                img: data.results[0].urls.regular
+            });
+        } catch (err) {
+            console.log("error happened during fetching img");
+        }
+    };
 
     render() {
-        let { latitude, longitude, location } = this.state;
+        let { latitude, longitude, location, backgroundImg, img } = this.state;
 
-        console.log(latitude, longitude, location);
+        console.log(`'${img}'`);
         return (
             <WeatherContext.Provider
                 value={{

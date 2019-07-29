@@ -7,20 +7,16 @@ export default function Location() {
     const { temperature, summary, icon } = context;
 
     return (
-        <div>
-            <h2>
-                <div>
-                    <Skycons
-                        color="white"
-                        icon={icon}
-                        autoplay={true}
-                        style={{ width: "5%", height: "5%" }}
-                    />
-                    {temperature}
-                </div>
-                <br />
-                <div className="my-5">{summary}</div>
-            </h2>
+        <div className="weather">
+            <Skycons
+                color="white"
+                icon={icon}
+                autoplay={true}
+                style={{ width: "5%", height: "5%" }}
+            />
+            {temperature}
+            <br />
+            {summary}
         </div>
     );
 }
