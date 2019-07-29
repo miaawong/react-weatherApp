@@ -25,3 +25,11 @@ button:hover {
 h1 {
     font-size: 3rem;
 }
+.background {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-position: center;
+    background-size: cover;
+}

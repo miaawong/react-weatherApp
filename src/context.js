@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import DarkSky from "./DarkSky";
+import { taggedTemplateExpression } from "@babel/types";
 
 const WeatherContext = React.createContext();
 
@@ -15,13 +16,13 @@ class WeatherProvider extends Component {
         tempIcon: "",
         searchString: "",
         backgroundImg: "",
-        img: ""
+        img: "",
+        randomNum: ""
     };
 
     // fetch weather from dark skies
     fetchWeather = () => {
         let { latitude, longitude } = this.state;
-        // console.log("set stated" + longitude, latitude);
         let proxy = "https://cors-anywhere.herokuapp.com/";
         let darkSkyApi =
             "https://api.darksky.net/forecast/" +
@@ -31,7 +32,6 @@ class WeatherProvider extends Component {
             "," +
             longitude;
         let api = proxy + darkSkyApi;
-        // console.log(api);
         fetch(api)
             .then(res => res.json())
             .then(data => {
@@ -40,7 +40,7 @@ class WeatherProvider extends Component {
                     summary: data.currently.summary,
                     tempIcon: data.currently.icon
                 });
-                // console.log(data);
+
                 this.findIcon();
             })
             .catch(err => {
@@ -50,7 +50,7 @@ class WeatherProvider extends Component {
     findIcon = () => {
         let { tempIcon, icon } = this.state;
         icon = tempIcon.toUpperCase().replace(/-/g, "_");
-        console.log(icon);
+
         this.setState({
             icon
         });
@@ -118,15 +118,15 @@ class WeatherProvider extends Component {
                 //resets form
                 searchString: ""
             });
-            console.log(json);
             this.fetchWeather();
+            this.randomNum();
             this.fetchImg();
         } catch (error) {
             console.log(error);
         }
     };
     fetchImg = async () => {
-        let { location } = this.state;
+        let { location, randomNum } = this.state;
         try {
             let response = await fetch(
                 `https://api.unsplash.com/search/photos/?page=1&per_page=10&query=${location}&client_id=${
@@ -138,18 +138,25 @@ class WeatherProvider extends Component {
 
             // set data to imgs array
             this.setState({
-                backgroundImg: data.results[0],
-                img: data.results[0].urls.regular
+                backgroundImg: data.results[randomNum],
+                img: data.results[randomNum].urls.regular
             });
+            console.log(data.results[randomNum]);
         } catch (err) {
             console.log("error happened during fetching img");
         }
     };
 
+    randomNum = () => {
+        let num = Math.floor(Math.random() * 11);
+        this.setState({
+            randomNum: num
+        });
+    };
+
     render() {
         let { latitude, longitude, location, backgroundImg, img } = this.state;
-
-        console.log(`'${img}'`);
+        console.log();
         return (
             <WeatherContext.Provider
                 value={{
