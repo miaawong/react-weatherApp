@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Title from "./components/Title";
 import WeatherContainer from "./components/WeatherContainer";
 import Location from "./components/Location";
 import Form from "./components/Form";

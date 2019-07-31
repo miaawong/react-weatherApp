@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import DarkSky from "./DarkSky";
-import { taggedTemplateExpression } from "@babel/types";
 
 const WeatherContext = React.createContext();
 
@@ -69,6 +68,7 @@ class WeatherProvider extends Component {
         } catch (error) {
             console.log(error);
         }
+        this.fetchImg();
     };
     getGeoLocation = () => {
         this.setState({
@@ -103,6 +103,10 @@ class WeatherProvider extends Component {
     search = async e => {
         e.preventDefault();
         let { searchString } = this.state;
+        this.setState({
+            loading: true
+        });
+
         let proxy = "https://cors-anywhere.herokuapp.com/";
         try {
             let response = await fetch(
@@ -115,9 +119,11 @@ class WeatherProvider extends Component {
                 latitude: json.results[0].geometry.location.lat,
                 longitude: json.results[0].geometry.location.lng,
                 location: json.results[0].formatted_address,
+                loading: false,
                 //resets form
                 searchString: ""
             });
+            console.log(json.results[0].formatted_address);
             this.fetchWeather();
             this.randomNum();
             this.fetchImg();
@@ -127,6 +133,7 @@ class WeatherProvider extends Component {
     };
     fetchImg = async () => {
         let { location, randomNum } = this.state;
+        console.log(location);
         try {
             let response = await fetch(
                 `https://api.unsplash.com/search/photos/?page=1&per_page=10&query=${location}&client_id=${
@@ -155,7 +162,6 @@ class WeatherProvider extends Component {
     };
 
     render() {
-        let { latitude, longitude, location, backgroundImg, img } = this.state;
         console.log();
         return (
             <WeatherContext.Provider

@@ -12,7 +12,7 @@ export default function Location() {
                 color="white"
                 icon={icon}
                 autoplay={true}
-                style={{ width: "5%", height: "5%" }}
+                style={{ width: "15%", height: "15%" }}
             />
             {temperature}
             <br />
