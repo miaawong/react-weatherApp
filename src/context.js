@@ -93,15 +93,13 @@ class WeatherProvider extends Component {
         );
     };
 
-    handleInputChange = e => {
-        if (e.target.value)
-            this.setState({
-                searchString: e.target.value
-            });
+    handleInputChange = searchString => {
+        this.setState({
+            searchString
+        });
     };
 
     search = async e => {
-        e.preventDefault();
         let { searchString } = this.state;
         this.setState({
             loading: true

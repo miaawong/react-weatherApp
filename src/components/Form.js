@@ -1,6 +1,9 @@
 import React, { useContext } from "react";
 import { FaLocationArrow } from "react-icons/fa";
 import { WeatherContext } from "../context";
+// import PlacesAutocomplete from "react-places-autocomplete";
+import SearchBar from "material-ui-search-bar";
+import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 
 export default function Form() {
     const context = useContext(WeatherContext);
@@ -12,18 +15,18 @@ export default function Form() {
                 <button onClick={getGeoLocation} className="button">
                     <FaLocationArrow /> Use my Location
                 </button>
-                <form onSubmit={search}>
-                    <br />
-                    <input
-                        type="text"
-                        placeholder="city"
-                        className="form"
+                {/* <PlacesAutocomplete value={searchString}> */}
+                <MuiThemeProvider>
+                    <SearchBar
                         value={searchString}
                         onChange={handleInputChange}
+                        onRequestSearch={search}
+                        style={{ margin: "40px auto", maxWidth: 800 }}
+                        hintText="Search City"
                     />
-                    {/* <button onClick={sayHello}> hello</button> */}
-                    <button>Go</button>
-                </form>
+
+                    {/* </PlacesAutocomplete> */}
+                </MuiThemeProvider>
             </div>
         </>
     );

@@ -23,7 +23,7 @@ button:hover {
     font-size: 2rem;
 }
 h1 {
-    font-size: 3rem;
+    font-size: 5rem;
 }
 .background {
     min-height: 100vh;
@@ -34,7 +34,8 @@ h1 {
     background-size: cover;
 }
 .container {
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(52, 56, 56, 0.7);
+    border-radius: 5px;
     width: 500px;
     padding: 1rem;
 }
