@@ -13,10 +13,11 @@ class WeatherProvider extends Component {
         latitude: 0,
         longitude: 0,
         tempIcon: "",
-        searchString: "",
         backgroundImg: "",
         img: "",
-        randomNum: ""
+        randomNum: "",
+        searchString: "",
+        city: ""
     };
 
     // fetch weather from dark skies
@@ -54,6 +55,7 @@ class WeatherProvider extends Component {
             icon
         });
     };
+
     // reverse geolocation from google map api
     fetchLocation = async () => {
         let { latitude, longitude } = this.state;
@@ -70,6 +72,7 @@ class WeatherProvider extends Component {
         }
         this.fetchImg();
     };
+
     getGeoLocation = () => {
         this.setState({
             loading: true
@@ -158,9 +161,35 @@ class WeatherProvider extends Component {
             randomNum: num
         });
     };
+    handleScript = () => {
+        let options = {
+            types: ["(cities)"]
+        }; // to disable any eslint 'google not defined' errors
+        // init google autocomplete
+        /*global google */ this.autocomplete = new google.maps.places.Autocomplete(
+            document.getElementById("autocomplete"),
+            options
+        );
+        // Fire Event when a suggested name is selected
+        this.autocomplete.addListener("place_changed", this.handlePlaceSelect);
+    };
+
+    handlePlaceSelect = () => {
+        // Extract City From Address Object
+        let addressObject = this.autocomplete.getPlace();
+        console.log(addressObject);
+        let address = addressObject.address_components;
+        console.log(address);
+        if (address) {
+            this.setState({
+                // location: address[0].long_name,
+                // searchString: addressObject.formatted_address
+            });
+        }
+        this.search();
+    };
 
     render() {
-        console.log();
         return (
             <WeatherContext.Provider
                 value={{
@@ -169,7 +198,8 @@ class WeatherProvider extends Component {
                     fetchWeather: this.fetchWeather,
                     fetchLocation: this.fetchLocation,
                     handleInputChange: this.handleInputChange,
-                    search: this.search
+                    search: this.search,
+                    handleScript: this.handleScript
                 }}
             >
                 {this.props.children}
