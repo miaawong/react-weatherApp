@@ -13,6 +13,7 @@ export default function Form() {
     const {
         getGeoLocation,
         handleInputChange,
+        handlePlaceSelect,
         search,
         searchString,
         handleScript
@@ -37,7 +38,7 @@ export default function Form() {
                         id="autocomplete"
                         value={searchString}
                         onChange={handleInputChange}
-                        onRequestSearch={search}
+                        onRequestSearch={() => console.log("searching")}
                         style={{ margin: "40px auto", maxWidth: 800 }}
                         hintText="Search City"
                     />

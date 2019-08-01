@@ -102,8 +102,9 @@ class WeatherProvider extends Component {
         });
     };
 
-    search = async e => {
+    search = async () => {
         let { searchString } = this.state;
+        console.log("SEARCH" + searchString);
         this.setState({
             loading: true
         });
@@ -124,7 +125,7 @@ class WeatherProvider extends Component {
                 //resets form
                 searchString: ""
             });
-            console.log(json.results[0].formatted_address);
+            //console.log(json.results[0].formatted_address);
             this.fetchWeather();
             this.randomNum();
             this.fetchImg();
@@ -170,23 +171,28 @@ class WeatherProvider extends Component {
             document.getElementById("autocomplete"),
             options
         );
+        // enableEnterKey(field);
         // Fire Event when a suggested name is selected
         this.autocomplete.addListener("place_changed", this.handlePlaceSelect);
     };
 
-    handlePlaceSelect = () => {
+    handlePlaceSelect = async () => {
         // Extract City From Address Object
-        let addressObject = this.autocomplete.getPlace();
-        console.log(addressObject);
-        let address = addressObject.address_components;
-        console.log(address);
-        if (address) {
-            this.setState({
-                // location: address[0].long_name,
-                // searchString: addressObject.formatted_address
-            });
+        let addressObject = await this.autocomplete.getPlace();
+        if (addressObject) {
+            let address = addressObject.address_components;
+            console.log("hello!!!!");
+            console.log("address : " + JSON.stringify(address));
+            if (address) {
+                this.setState({
+                    location: address[0].long_name,
+                    searchString: addressObject.formatted_address
+                });
+                this.search();
+            } else {
+                this.search();
+            }
         }
-        this.search();
     };
 
     render() {
@@ -199,7 +205,8 @@ class WeatherProvider extends Component {
                     fetchLocation: this.fetchLocation,
                     handleInputChange: this.handleInputChange,
                     search: this.search,
-                    handleScript: this.handleScript
+                    handleScript: this.handleScript,
+                    handlePlaceSelect: this.handlePlaceSelect
                 }}
             >
                 {this.props.children}
