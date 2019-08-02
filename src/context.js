@@ -17,7 +17,8 @@ class WeatherProvider extends Component {
         img: "",
         randomNum: "",
         searchString: "",
-        city: ""
+        city: "",
+        imgQuery: ""
     };
 
     // fetch weather from dark skies
@@ -66,7 +67,10 @@ class WeatherProvider extends Component {
                 `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latlng}&key=${key}`
             );
             let data = await response.json();
-            this.setState({ location: data.results[2].formatted_address });
+            this.setState({
+                location: data.results[2].formatted_address,
+                imgQuery: data.results[5].formatted_address
+            });
         } catch (error) {
             console.log(error);
         }
@@ -104,11 +108,9 @@ class WeatherProvider extends Component {
 
     search = async () => {
         let { searchString } = this.state;
-        console.log("SEARCH" + searchString);
         this.setState({
             loading: true
         });
-
         let proxy = "https://cors-anywhere.herokuapp.com/";
         try {
             let response = await fetch(
@@ -121,38 +123,34 @@ class WeatherProvider extends Component {
                 latitude: json.results[0].geometry.location.lat,
                 longitude: json.results[0].geometry.location.lng,
                 location: json.results[0].formatted_address,
+                imgQuery: json.results[0].formatted_address,
                 loading: false,
                 //resets form
                 searchString: ""
             });
-            //console.log(json.results[0].formatted_address);
             this.fetchWeather();
-            this.randomNum();
             this.fetchImg();
         } catch (error) {
             console.log(error);
         }
     };
     fetchImg = async () => {
-        let { location, randomNum } = this.state;
-        console.log(location);
+        this.randomNum();
+        let { imgQuery, randomNum } = this.state;
         try {
             let response = await fetch(
-                `https://api.unsplash.com/search/photos/?page=1&per_page=10&query=${location}&client_id=${
+                `https://api.unsplash.com/search/photos/?page=1&per_page=10&query=${imgQuery}&client_id=${
                     DarkSky.applicationId
                 }`
             );
-            let data = await response.json();
-            // turn response to json
-
-            // set data to imgs array
+            console.log(response);
+            let json = await response.json();
             this.setState({
-                backgroundImg: data.results[randomNum],
-                img: data.results[randomNum].urls.regular
+                backgroundImg: json.results[randomNum],
+                img: json.results[randomNum].urls.regular
             });
-            console.log(data.results[randomNum]);
         } catch (err) {
-            console.log("error happened during fetching img");
+            console.log("error happened during fetching img" + err);
         }
     };
 
@@ -181,8 +179,6 @@ class WeatherProvider extends Component {
         let addressObject = await this.autocomplete.getPlace();
         if (addressObject) {
             let address = addressObject.address_components;
-            console.log("hello!!!!");
-            console.log("address : " + JSON.stringify(address));
             if (address) {
                 this.setState({
                     location: address[0].long_name,
@@ -196,6 +192,8 @@ class WeatherProvider extends Component {
     };
 
     render() {
+        let { img } = this.state;
+        console.log(img);
         return (
             <WeatherContext.Provider
                 value={{
