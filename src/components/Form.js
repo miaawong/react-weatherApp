@@ -13,33 +13,31 @@ export default function Form() {
     const {
         getGeoLocation,
         handleInputChange,
-        handlePlaceSelect,
-        search,
         searchString,
         handleScript
     } = context;
 
     return (
         <>
-            <div className="col my-5 ">
+            <div className="form my-5 ">
                 <Script
                     url={`https://maps.googleapis.com/maps/api/js?key=${
                         DarkSky.googleKey
                     }&libraries=places`}
                     onLoad={handleScript}
                 />
-                <button onClick={getGeoLocation} className="button">
-                    <FaLocationArrow /> Use my Location
-                </button>
                 {/* <PlacesAutocomplete value={searchString}> */}
                 <MuiThemeProvider>
+                    <button onClick={getGeoLocation} className="button ">
+                        <FaLocationArrow size={20} />
+                    </button>
                     <SearchBar
                         placeholder=""
                         id="autocomplete"
                         value={searchString}
                         onChange={handleInputChange}
                         onRequestSearch={() => console.log("searching")}
-                        style={{ margin: "40px auto", maxWidth: 800 }}
+                        style={{ marginRight: "0px !important", maxWidth: 500 }}
                         hintText="Search City"
                     />
 

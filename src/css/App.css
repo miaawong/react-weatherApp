@@ -12,6 +12,11 @@ body {
 
 .button {
     border-radius: 5px;
+    float: left;
+    margin-left: 200px;
+    margin-right: 20px;
+    width: 50px;
+    height: 48px;
 }
 button:hover {
     background: var(--mainLightGrey);
@@ -36,6 +41,24 @@ h1 {
 .container {
     background: rgba(52, 56, 56, 0.7);
     border-radius: 5px;
-    width: 500px;
+    width: 1000px;
     padding: 1rem;
+}
+
+/*  mobile  */
+@media only screen and (max-width: 1000px) {
+    .button {
+        margin-left: 95px;
+    }
+}
+
+@media only screen and (max-width: 991px) {
+    .button {
+        margin-left: 45px;
+    }
+}
+@media only screen and (max-width: 500px) {
+    .button {
+        margin-left: 0px;
+    }
 }

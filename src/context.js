@@ -37,11 +37,12 @@ class WeatherProvider extends Component {
             .then(res => res.json())
             .then(data => {
                 this.setState({
-                    temperature: data.currently.temperature + " °F",
+                    temperature:
+                        ((data.currently.temperature * 10) / 10).toFixed(1) +
+                        " °F",
                     summary: data.currently.summary,
                     tempIcon: data.currently.icon
                 });
-
                 this.findIcon();
             })
             .catch(err => {

@@ -15,6 +15,7 @@ export default function Location() {
                 style={{ width: "15%", height: "15%" }}
             />
             {temperature}
+
             <br />
             {summary}
         </div>
