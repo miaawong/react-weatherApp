@@ -9,5 +9,6 @@ export default function WeatherContainer() {
     if (loading) {
         return <Loading />;
     }
+
     return <Weather />;
 }

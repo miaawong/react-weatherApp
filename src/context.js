@@ -6,7 +6,7 @@ const WeatherContext = React.createContext();
 class WeatherProvider extends Component {
     state = {
         location: "",
-        loading: "",
+        loading: false,
         temperature: null,
         summary: "",
         icon: "",
@@ -89,8 +89,7 @@ class WeatherProvider extends Component {
                 let longitude = position.coords.longitude;
                 this.setState({
                     latitude,
-                    longitude,
-                    loading: false
+                    longitude
                 });
                 this.fetchWeather();
                 this.fetchLocation();
@@ -148,7 +147,8 @@ class WeatherProvider extends Component {
             let json = await response.json();
             this.setState({
                 backgroundImg: json.results[randomNum],
-                img: json.results[randomNum].urls.regular
+                img: json.results[randomNum].urls.regular,
+                loading: false
             });
         } catch (err) {
             console.log("error happened during fetching img" + err);
@@ -187,7 +187,7 @@ class WeatherProvider extends Component {
                 });
                 this.search();
             } else {
-                this.search();
+                alert("Please use auto suggestions, thanks!");
             }
         }
     };
