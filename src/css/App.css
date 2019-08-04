@@ -38,7 +38,7 @@ button:hover {
 .container {
     background: rgba(52, 56, 56, 0.7);
     border-radius: 5px;
-    width: 1000px;
+    max-width: 600px;
     padding: 1rem;
 }
 
@@ -48,12 +48,22 @@ button:hover {
         margin-left: 0px;
         margin-right: 10px;
     }
-    .container {
-        width: 500px;
+    .switchBtn {
+        margin-left: 15px;
     }
 }
+
 @media only screen and (max-width: 600px) {
-    .container {
-        width: 300px;
+    /* .container {
+        width: 800px;
+    } */
+    .form {
+        flex-wrap: wrap;
+    }
+    .switchBtn {
+        margin-top: 20px;
+    }
+    .button {
+        margin-bottom: 20px;
     }
 }

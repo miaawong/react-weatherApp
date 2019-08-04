@@ -8,7 +8,7 @@ import Switch from "@material-ui/core/Switch";
 import DarkSky from "../DarkSky";
 import Script from "react-load-script";
 
-export default function Form() {
+export default function Form(props) {
     const context = useContext(WeatherContext);
     const {
         getGeoLocation,
@@ -16,7 +16,8 @@ export default function Form() {
         searchString,
         handleScript,
         handleUnitChange,
-        unitState
+        unitState,
+        temperature
     } = context;
 
     return (
@@ -28,7 +29,7 @@ export default function Form() {
                 onLoad={handleScript}
             />
             <MuiThemeProvider>
-                <div className="form my-5 ">
+                <div className="form my-3">
                     <button onClick={getGeoLocation} className="button">
                         <FaLocationArrow size={20} />
                     </button>
@@ -38,17 +39,24 @@ export default function Form() {
                         value={searchString}
                         onChange={handleInputChange}
                         onRequestSearch={() => console.log("searching")}
-                        style={{ width: 600, borderRadius: "5px" }}
                         hintText="Search City"
+                        style={{
+                            width: 400,
+                            borderRadius: "5px"
+                        }}
                     />
-                    <label>
-                        °F
-                        <Switch
-                            onChange={handleUnitChange}
-                            checked={unitState}
-                        />
-                        °C
-                    </label>
+                    <div className="switchBtn">
+                        {temperature ? (
+                            <label>
+                                °F
+                                <Switch
+                                    onChange={handleUnitChange}
+                                    checked={unitState}
+                                />
+                                °C
+                            </label>
+                        ) : null}
+                    </div>
                 </div>
             </MuiThemeProvider>
         </>
