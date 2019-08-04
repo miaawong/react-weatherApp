@@ -4,7 +4,7 @@ import { WeatherContext } from "../context";
 // import PlacesAutocomplete from "react-places-autocomplete";
 import SearchBar from "material-ui-search-bar";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-
+import Switch from "@material-ui/core/Switch";
 import DarkSky from "../DarkSky";
 import Script from "react-load-script";
 
@@ -14,21 +14,22 @@ export default function Form() {
         getGeoLocation,
         handleInputChange,
         searchString,
-        handleScript
+        handleScript,
+        handleUnitChange,
+        unitState
     } = context;
 
     return (
         <>
-            <div className="form my-5 ">
-                <Script
-                    url={`https://maps.googleapis.com/maps/api/js?key=${
-                        DarkSky.googleKey
-                    }&libraries=places`}
-                    onLoad={handleScript}
-                />
-                {/* <PlacesAutocomplete value={searchString}> */}
-                <MuiThemeProvider>
-                    <button onClick={getGeoLocation} className="button ">
+            <Script
+                url={`https://maps.googleapis.com/maps/api/js?key=${
+                    DarkSky.googleKey
+                }&libraries=places`}
+                onLoad={handleScript}
+            />
+            <MuiThemeProvider>
+                <div className="form my-5 ">
+                    <button onClick={getGeoLocation} className="button">
                         <FaLocationArrow size={20} />
                     </button>
                     <SearchBar
@@ -37,13 +38,19 @@ export default function Form() {
                         value={searchString}
                         onChange={handleInputChange}
                         onRequestSearch={() => console.log("searching")}
-                        style={{ marginRight: "0px !important", maxWidth: 500 }}
+                        style={{ width: 600, borderRadius: "5px" }}
                         hintText="Search City"
                     />
-
-                    {/* </PlacesAutocomplete> */}
-                </MuiThemeProvider>
-            </div>
+                    <label>
+                        °F
+                        <Switch
+                            onChange={handleUnitChange}
+                            checked={unitState}
+                        />
+                        °C
+                    </label>
+                </div>
+            </MuiThemeProvider>
         </>
     );
 }

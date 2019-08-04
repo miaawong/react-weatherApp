@@ -4,7 +4,7 @@ import Skycons from "react-skycons";
 
 export default function Location() {
     const context = useContext(WeatherContext);
-    const { temperature, summary, icon } = context;
+    const { temperature, summary, icon, unit } = context;
 
     return (
         <div className="weather">
@@ -14,8 +14,7 @@ export default function Location() {
                 autoplay={true}
                 style={{ width: "15%", height: "15%" }}
             />
-            {temperature}
-
+            {temperature} {unit}
             <br />
             {summary}
         </div>

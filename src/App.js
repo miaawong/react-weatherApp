@@ -6,9 +6,6 @@ import "./css/bootstrap.min.css";
 import "./css/App.css";
 import Background from "./components/Background";
 
-import Script from "react-load-script";
-import DarkSky from "./DarkSky";
-
 export default class App extends Component {
     render() {
         return (

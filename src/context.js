@@ -8,6 +8,8 @@ class WeatherProvider extends Component {
         location: "",
         loading: false,
         temperature: null,
+        cTemp: null,
+        tTemp: null,
         summary: "",
         icon: "",
         latitude: 0,
@@ -18,7 +20,9 @@ class WeatherProvider extends Component {
         randomNum: "",
         searchString: "",
         city: "",
-        imgQuery: ""
+        imgQuery: "",
+        unitState: false,
+        unit: ""
     };
 
     // fetch weather from dark skies
@@ -37,13 +41,19 @@ class WeatherProvider extends Component {
             .then(res => res.json())
             .then(data => {
                 this.setState({
-                    temperature:
-                        ((data.currently.temperature * 10) / 10).toFixed(1) +
-                        " °F",
+                    temperature: (
+                        (data.currently.temperature * 10) /
+                        10
+                    ).toFixed(1),
+                    tTemp: ((data.currently.temperature * 10) / 10).toFixed(1),
+                    unit: " °F",
                     summary: data.currently.summary,
                     tempIcon: data.currently.icon
                 });
+
                 this.findIcon();
+
+                console.log(data);
             })
             .catch(err => {
                 console.log("oops error occurred during fetchweather");
@@ -77,7 +87,7 @@ class WeatherProvider extends Component {
         }
         this.fetchImg();
     };
-
+    // navigator geolocation
     getGeoLocation = () => {
         this.setState({
             loading: true
@@ -99,7 +109,7 @@ class WeatherProvider extends Component {
             }
         );
     };
-
+    // handle change when searchstring is changed
     handleInputChange = searchString => {
         this.setState({
             searchString
@@ -134,6 +144,7 @@ class WeatherProvider extends Component {
             console.log(error);
         }
     };
+
     fetchImg = async () => {
         this.randomNum();
         let { imgQuery, randomNum } = this.state;
@@ -161,6 +172,8 @@ class WeatherProvider extends Component {
             randomNum: num
         });
     };
+
+    // autocomplete
     handleScript = () => {
         let options = {
             types: ["(cities)"]
@@ -192,9 +205,27 @@ class WeatherProvider extends Component {
         }
     };
 
+    handleUnitChange = event => {
+        let { unitState, temperature, cTemp, tTemp } = this.state;
+
+        this.setState({
+            unitState: event.target.checked
+        });
+        if (!unitState) {
+            cTemp = (temperature - 32) * (5 / 9);
+            cTemp = ((cTemp * 10) / 10).toFixed(1);
+            this.setState({
+                temperature: cTemp,
+                unit: " °C"
+            });
+        } else
+            this.setState({
+                temperature: tTemp,
+                unit: " °F"
+            });
+    };
+
     render() {
-        let { img } = this.state;
-        console.log(img);
         return (
             <WeatherContext.Provider
                 value={{
@@ -205,7 +236,8 @@ class WeatherProvider extends Component {
                     handleInputChange: this.handleInputChange,
                     search: this.search,
                     handleScript: this.handleScript,
-                    handlePlaceSelect: this.handlePlaceSelect
+                    handlePlaceSelect: this.handlePlaceSelect,
+                    handleUnitChange: this.handleUnitChange
                 }}
             >
                 {this.props.children}
