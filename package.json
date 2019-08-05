@@ -12,7 +12,8 @@
         "react-load-script": "0.0.6",
         "react-places-autocomplete": "^7.2.1",
         "react-scripts": "3.0.1",
-        "react-skycons": "^0.7.0"
+        "react-skycons": "^0.7.0",
+        "styled-components": "^4.3.2"
     },
     "scripts": {
         "start": "react-scripts start",
