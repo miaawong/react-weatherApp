@@ -26,28 +26,8 @@ const useStyles = makeStyles({
         margin: "0 auto"
     }
 });
-// <div className="switchBtn">
-//                 {temperature ? (
-//                     <label>
-//                         °F
-//                         <Switch
-//                             onChange={handleUnitChange}
-//                             checked={unitState}
-//                         />
-//                         °C
-//                     </label>
-//                 ) : null}
-
-export default function Weather({ children }) {
-    const context = useContext(WeatherContext);
-    const { temperature, summary, icon, unit, loading } = context;
+export default function CardComponent({ children }) {
     const classes = useStyles();
 
-    return (
-        <Card className={classes.card}>
-            {loading ? <Loading /> : <Form />}
-            {/* {temperature ? "hello" : <Form />} */}
-            {/* <Form /> */}
-        </Card>
-    );
+    return <Card className={classes.card}>{children}</Card>;
 }

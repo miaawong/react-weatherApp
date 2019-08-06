@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import WeatherContainer from "./components/WeatherContainer";
+import Container from "./components/Container";
 import Location from "./components/Location";
 import Form from "./components/Form";
 import "./css/bootstrap.min.css";
@@ -21,7 +21,7 @@ export default class App extends Component {
         return (
             <MuiThemeProvider>
                 <Background>
-                    <WeatherContainer />
+                    <Container />
                 </Background>
             </MuiThemeProvider>
         );
