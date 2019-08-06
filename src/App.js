@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Container from "./components/Container";
-import Location from "./components/Location";
 import Form from "./components/Form";
 import "./css/bootstrap.min.css";
 import "./css/App.css";

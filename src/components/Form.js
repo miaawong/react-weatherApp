@@ -4,7 +4,6 @@ import { WeatherContext } from "../context";
 // import PlacesAutocomplete from "react-places-autocomplete";
 import SearchBar from "material-ui-search-bar";
 import Script from "react-load-script";
-import Switch from "@material-ui/core/Switch";
 import DarkSky from "../DarkSky";
 import CardComponent from "./Card";
 export default function Form(props) {

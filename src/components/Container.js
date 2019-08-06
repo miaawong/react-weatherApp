@@ -17,7 +17,7 @@ export default function Container() {
         );
     }
     if (temperature) {
-        return <Forecast />;
+        return <Forecast style={{ color: "white" }} />;
     }
     return <Form />;
 }

@@ -32,9 +32,6 @@ button:hover {
 .loading {
     margin: 0 auto;
 }
-/* .weather {
-    font-size: 2rem;
-} */
 .background {
     min-height: 100vh;
     display: flex;
@@ -43,14 +40,28 @@ button:hover {
     background-position: center;
     background-size: cover;
 }
-/* .container {
-    background: rgba(52, 56, 56, 0.7);
-    border-radius: 5px;
+.navbar {
     width: 100%;
-    height: 75%;
-    padding: 1rem;
-} */
-
+    text-align: center;
+    color: white;
+}
+.navbar > * {
+    margin: 0 auto;
+}
+.tempRn {
+    width: 100%;
+    align-content: baseline;
+}
+.date {
+    display: flex;
+    flex-flow: row wrap;
+}
+h1 {
+    font-weight: bold;
+}
+.temperature {
+    font-size: 100px;
+}
 /*  mobile  */
 
 @media only screen and (max-width: 600px) {
