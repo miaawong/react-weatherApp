@@ -7,7 +7,11 @@ export default function WeatherContainer() {
     const context = useContext(WeatherContext);
     const { loading } = context;
     if (loading) {
-        return <Loading />;
+        return (
+            <Weather>
+                <Loading />
+            </Weather>
+        );
     }
 
     return <Weather />;

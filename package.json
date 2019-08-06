@@ -13,6 +13,7 @@
         "react-places-autocomplete": "^7.2.1",
         "react-scripts": "3.0.1",
         "react-skycons": "^0.7.0",
+        "react-spinners-kit": "^1.9.0",
         "styled-components": "^4.3.2"
     },
     "scripts": {

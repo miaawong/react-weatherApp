@@ -1,9 +1,10 @@
 import React from "react";
+import { CircleSpinner } from "react-spinners-kit";
 
 export default function Loading() {
     return (
-        <div>
-            <h2>currently fetching weather...</h2>
+        <div className="loading">
+            <CircleSpinner size={50} color="white" />
         </div>
     );
 }

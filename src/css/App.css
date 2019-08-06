@@ -15,18 +15,26 @@ body {
     width: 50px;
     height: 48px;
     font-weight: bold;
+    margin: 0 20px;
 }
 
 button:hover {
     background: var(--mainLightGrey);
 }
+.switchBtn {
+    margin-left: 15px;
+}
 .form {
     display: flex;
     justify-content: space-around;
+    margin: 0 auto;
 }
-.weather {
+.loading {
+    margin: 0 auto;
+}
+/* .weather {
     font-size: 2rem;
-}
+} */
 .background {
     min-height: 100vh;
     display: flex;
@@ -35,29 +43,17 @@ button:hover {
     background-position: center;
     background-size: cover;
 }
-.container {
+/* .container {
     background: rgba(52, 56, 56, 0.7);
     border-radius: 5px;
     width: 100%;
     height: 75%;
     padding: 1rem;
-}
+} */
 
 /*  mobile  */
-@media only screen and (max-width: 991px) {
-    .button {
-        margin-left: 0px;
-        margin-right: 10px;
-    }
-    .switchBtn {
-        margin-left: 15px;
-    }
-}
 
 @media only screen and (max-width: 600px) {
-    /* .container {
-        width: 800px;
-    } */
     .form {
         flex-wrap: wrap;
     }
