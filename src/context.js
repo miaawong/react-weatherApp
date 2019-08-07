@@ -22,7 +22,11 @@ class WeatherProvider extends Component {
         city: "",
         imgQuery: "",
         unitState: false,
-        unit: ""
+        unit: "",
+        tempDate: "",
+        currentDate: "",
+        timeZone: "",
+        weekday: ""
     };
 
     // fetch weather from dark skies
@@ -48,16 +52,41 @@ class WeatherProvider extends Component {
                     tTemp: ((data.currently.temperature * 10) / 10).toFixed(1),
                     unit: " °F",
                     summary: data.currently.summary,
-                    tempIcon: data.currently.icon
+                    tempIcon: data.currently.icon,
+                    tempDate: data.currently.time,
+                    timeZone: data.timezone
                 });
-
+                this.findDate();
                 this.findIcon();
 
-                console.log(data);
+                console.log(data.timezone);
             })
             .catch(err => {
                 console.log("oops error occurred during fetchweather");
             });
+    };
+
+    findDate = () => {
+        let { tempDate, currentDate, timeZone, weekday } = this.state;
+        let days = [
+            "Sunday",
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday"
+        ];
+
+        currentDate = new Date(tempDate * 1000);
+        currentDate = currentDate.toLocaleString("en-US", { timeZone });
+        let dateString = new Date(currentDate);
+        weekday = days[dateString.getDay()];
+
+        this.setState({
+            currentDate,
+            weekday
+        });
     };
     findIcon = () => {
         let { tempIcon, icon } = this.state;

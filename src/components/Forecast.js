@@ -44,7 +44,16 @@ const useStyles = makeStyles({
 
 export default function Forecast() {
     const context = useContext(WeatherContext);
-    const { temperature, summary, icon, unit, location } = context;
+    const {
+        temperature,
+        summary,
+        icon,
+        unit,
+        location,
+        currentDate,
+        weekday
+    } = context;
+
     const classes = useStyles();
     return (
         <div>
@@ -69,7 +78,10 @@ export default function Forecast() {
                 </div>
                 <CardContent>
                     <div>
-                        <h3> date </h3> <h4> {summary}</h4>
+                        <h3>
+                            {weekday}, {currentDate}
+                        </h3>
+                        <h4> {summary}</h4>
                     </div>
 
                     <div className="tempRn">
@@ -87,7 +99,7 @@ export default function Forecast() {
 
                 <ExpansionPanel className={classes.expansion}>
                     <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                        <Typography variant="subtitle1">
+                        <Typography component={"div"}>
                             <h5> 7 Day Forecast </h5>
                         </Typography>
                     </ExpansionPanelSummary>
