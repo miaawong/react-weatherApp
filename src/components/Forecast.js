@@ -2,10 +2,12 @@ import React, { useContext } from "react";
 import { WeatherContext } from "../context";
 import { FaArrowCircleLeft } from "react-icons/fa";
 import Skycons from "react-skycons";
+
 import Switch from "@material-ui/core/Switch";
 // import CardComponent from "./Card";
 
 import { makeStyles } from "@material-ui/core/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
@@ -21,14 +23,18 @@ const useStyles = makeStyles({
         display: "flex",
         alignItems: "center",
         background: "rgba(52, 56, 56, 0.7)",
-        width: "800px",
+        maxWidth: "800px",
         boxShadow: "0 0 10px 2px rgba(0,0,0,0.25)",
         borderRadius: "5px",
         // padding: "1rem",
         margin: "0 auto",
         // justifyContent: "space-between",
         color: "white",
-        flexWrap: "wrap"
+        flexWrap: "wrap",
+        ["@media (max-width:780px)"]: {
+            // eslint-disable-line no-useless-computed-key
+            width: "350px"
+        }
     },
     expansion: {
         background: "rgba(52, 56, 56, 0.7)",
@@ -82,8 +88,22 @@ export default function Forecast() {
                 </CardContent>
 
                 <ExpansionPanel className={classes.expansion}>
-                    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} />
-                    <Typography variant="subtitle1">7 day Forecast</Typography>
+                    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                        <Typography variant="subtitle1">
+                            <h5> 7 Day Forecast </h5>
+                        </Typography>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                        <ul className="week">
+                            <li> Monday</li>
+                            <li> Tuesday</li>
+                            <li> Wednesday</li>
+                            <li> Thursday</li>
+                            <li> Friday</li>
+                            <li> Saturday</li>
+                            <li> Sunday</li>
+                        </ul>
+                    </ExpansionPanelDetails>
                 </ExpansionPanel>
             </Card>
         </div>

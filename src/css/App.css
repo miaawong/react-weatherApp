@@ -44,6 +44,7 @@ button:hover {
     width: 100%;
     text-align: center;
     color: white;
+    margin: 20px;
 }
 .navbar > * {
     margin: 0 auto;
@@ -62,9 +63,20 @@ h1 {
 .temperature {
     font-size: 100px;
 }
+.week {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    list-style: none;
+    padding: 0 20px;
+    margin-bottom: 20px;
+}
 /*  mobile  */
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 780px) {
+    .temperature {
+        font-size: 60px;
+    }
     .form {
         flex-wrap: wrap;
     }
