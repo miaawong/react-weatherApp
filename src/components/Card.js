@@ -17,11 +17,11 @@ const useStyles = makeStyles({
         boxShadow: "0 0 10px 2px rgba(0,0,0,0.25)",
         borderRadius: "5px",
         padding: "1rem",
-        margin: "20px auto",
+        margin: "0",
         justifyContent: "space-between",
-        ["@media (max-width:1000px)"]: {
+        ["@media (max-width:780px)"]: {
             // eslint-disable-line no-useless-computed-key
-            width: "100%"
+            width: "100vw"
         }
     }
 });
