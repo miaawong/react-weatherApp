@@ -12,7 +12,7 @@ export default function Container() {
     if (loading) {
         return (
             <CardComponent>
-                <Loading />;
+                <Loading />
             </CardComponent>
         );
     }

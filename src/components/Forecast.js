@@ -23,23 +23,26 @@ const useStyles = makeStyles({
         display: "flex",
         alignItems: "center",
         background: "rgba(52, 56, 56, 0.7)",
-        maxWidth: "800px",
+        width: "800px",
         boxShadow: "0 0 10px 2px rgba(0,0,0,0.25)",
         borderRadius: "5px",
-        // padding: "1rem",
         margin: "0 auto",
         // justifyContent: "space-between",
         color: "white",
         flexWrap: "wrap",
-        ["@media (max-width:780px)"]: {
+        ["@media (max-width:1000px)"]: {
             // eslint-disable-line no-useless-computed-key
-            width: "350px"
+            width: "100%"
+        },
+        ["@media (max-width:480px)"]: {
+            // eslint-disable-line no-useless-computed-key
+            width: "60%"
         }
     },
     expansion: {
         background: "rgba(52, 56, 56, 0.7)",
         borderRadius: "5px",
-        width: "800px",
+        width: "100%",
         color: "white"
     }
 });

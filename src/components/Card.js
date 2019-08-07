@@ -12,13 +12,17 @@ const useStyles = makeStyles({
         textAlign: "center",
         alignItems: "center",
         background: "rgba(52, 56, 56, 0.7)",
-        maxWidth: "800px",
+        width: "800px",
         height: "350px",
         boxShadow: "0 0 10px 2px rgba(0,0,0,0.25)",
         borderRadius: "5px",
         padding: "1rem",
         margin: "20px auto",
-        justifyContent: "space-between"
+        justifyContent: "space-between",
+        ["@media (max-width:1000px)"]: {
+            // eslint-disable-line no-useless-computed-key
+            width: "100%"
+        }
     }
 });
 export default function CardComponent({ children }) {
