@@ -15,7 +15,7 @@ const useStyles = makeStyles({
         padding: "1rem",
         margin: "0",
         justifyContent: "space-between",
-        ["@media (max-width:780px)"]: {
+        "@media (max-width:780px)": {
             // eslint-disable-line no-useless-computed-key: "error"
             width: "100vw"
         }

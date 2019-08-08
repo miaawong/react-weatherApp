@@ -58,11 +58,10 @@ button:hover {
     flex-flow: row wrap;
 }
 h1 {
-    font-weight: bold;
+    font-weight: bolder;
+    font-size: 2rem;
 }
-.temperature {
-    font-size: 100px;
-}
+
 .week {
     display: flex;
     text-align: center;
@@ -70,16 +69,14 @@ h1 {
     justify-content: space-evenly;
     width: 100%;
     list-style: none;
-    padding: 0 20px;
-    margin-bottom: 20px;
+    padding: 0 0;
 }
 /*  mobile  */
 
-@media only screen and (max-width: 1000px) {
+@media only screen and (max-width: 780px) {
     .temperature {
         font-size: 60px;
     }
-
     .form {
         flex-wrap: wrap;
         width: 70%;
@@ -92,5 +89,20 @@ h1 {
     }
     .button {
         margin-bottom: 20px;
+    }
+    li {
+        padding: 0px 10px;
+    }
+}
+@media only screen and (max-width: 600px) {
+    .week {
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+    li {
+        padding: 5px 2px;
+    }
+    h1 {
+        padding-top: 20px;
     }
 }

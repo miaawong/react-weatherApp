@@ -25,7 +25,7 @@ const useStyles = makeStyles({
         margin: "0 ",
         color: "white",
         flexWrap: "wrap",
-        ["@media (max-width:780px)"]: {
+        "@media (max-width:780px)": {
             width: "100vw"
         }
     },
@@ -147,7 +147,7 @@ export default function Forecast() {
                             </h5>
                         </Typography>
                     </ExpansionPanelSummary>
-                    <ExpansionPanelDetails>
+                    <ExpansionPanelDetails style={{ padding: "0" }}>
                         <ul className="week">{formatted}</ul>
                     </ExpansionPanelDetails>
                 </ExpansionPanel>

@@ -33,7 +33,7 @@ export default function Form() {
                         id="autocomplete"
                         value={searchString}
                         onChange={handleInputChange}
-                        onRequestSearch={() => console.log("searching")}
+                        onRequestSearch={() => console.log("")}
                         hintText="Search City"
                         style={{
                             width: 400,
