@@ -6,16 +6,13 @@ import SearchBar from "material-ui-search-bar";
 import Script from "react-load-script";
 import DarkSky from "../DarkSky";
 import CardComponent from "./Card";
-export default function Form(props) {
+export default function Form() {
     const context = useContext(WeatherContext);
     const {
         getGeoLocation,
         handleInputChange,
         searchString,
-        handleScript,
-        handleUnitChange,
-        unitState,
-        temperature
+        handleScript
     } = context;
 
     return (

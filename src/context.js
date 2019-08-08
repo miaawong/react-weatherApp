@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import DarkSky from "./DarkSky";
-import { nullLiteral } from "@babel/types";
-
 const WeatherContext = React.createContext();
 
 class WeatherProvider extends Component {
@@ -59,11 +57,9 @@ class WeatherProvider extends Component {
                     timeZone: data.timezone,
                     weeklyForecast: data.daily.data
                 });
+                //   console.log(data);
                 this.findDate();
                 this.findIcon();
-                this.findWeek();
-                //   this.formatWeekly();
-                console.log(data.daily.data);
             })
             .catch(err => {
                 console.log("oops error occurred during fetchweather");
@@ -90,65 +86,6 @@ class WeatherProvider extends Component {
         this.setState({
             currentDate,
             weekday
-        });
-    };
-    formatWeekly = () => {
-        let days = [
-            "Sunday",
-            "Monday",
-            "Tuesday",
-            "Wednesday",
-            "Thursday",
-            "Friday",
-            "Saturday"
-        ];
-        let { unitState } = this.state;
-        let formattedTemp = this.state.weeklyForecast.map(day => {
-            let temp = day.temperatureHigh;
-            temp = ((temp * 10) / 10).toFixed(1);
-
-            // if (!unitState) {
-            //     temp = (temp - 32) * (5 / 9);
-            //     temp = ((temp * 10) / 10).toFixed(1);
-            // }
-            return temp;
-        });
-        console.log(formattedTemp);
-    };
-    findWeek = () => {
-        let {
-            weeklyForecast,
-            weekDays,
-            weekIcons,
-            weekTemps,
-            dayName
-        } = this.state;
-
-        let days = [
-            "Sunday",
-            "Monday",
-            "Tuesday",
-            "Wednesday",
-            "Thursday",
-            "Friday",
-            "Saturday"
-        ];
-
-        {
-            weekDays = [...weeklyForecast].slice(1).map(day => {
-                days = new Date(day.time * 1000);
-                days = days[days.getDay()];
-            });
-            // console.log(
-            //     (weekIcons = week.icon.toUpperCase().replace(/-/g, "_"))
-            // );
-            // weekTemps = week.temperatureHigh;
-        }
-        this.setState({
-            weekDays: [days]
-
-            // weekIcons,
-            // weekTemps
         });
     };
 
@@ -185,23 +122,28 @@ class WeatherProvider extends Component {
         this.setState({
             loading: true
         });
-        const geolocation = navigator.geolocation;
-        geolocation.getCurrentPosition(
-            position => {
-                let latitude = position.coords.latitude;
-                let longitude = position.coords.longitude;
-                this.setState({
-                    latitude,
-                    longitude
-                });
-                this.fetchWeather();
-                this.fetchLocation();
-            },
-            () => {
-                console.log("error");
-            }
-        );
+
+        const getPosition = position => {
+            let latitude = position.coords.latitude;
+            let longitude = position.coords.longitude;
+            this.setState({
+                latitude,
+                longitude
+            });
+            this.fetchWeather();
+            this.fetchLocation();
+        };
+        const errorFunc = error => {
+            alert("whoops, took a little to long, try again");
+            window.location.reload();
+        };
+        let geolocation = navigator.geolocation;
+        geolocation.getCurrentPosition(getPosition, errorFunc, {
+            enableHighAccuracy: true,
+            timeout: 10000
+        });
     };
+
     // handle change when searchstring is changed
     handleInputChange = searchString => {
         this.setState({
@@ -247,7 +189,6 @@ class WeatherProvider extends Component {
                     DarkSky.applicationId
                 }`
             );
-            console.log(response);
             let json = await response.json();
             this.setState({
                 backgroundImg: json.results[randomNum],
@@ -255,7 +196,7 @@ class WeatherProvider extends Component {
                 loading: false
             });
         } catch (err) {
-            console.log("error happened during fetching img" + err);
+            console.log("error happened during fetch img " + err);
         }
     };
 
@@ -299,7 +240,7 @@ class WeatherProvider extends Component {
     };
 
     handleUnitChange = event => {
-        let { unitState, temperature, cTemp, tTemp, temp } = this.state;
+        let { unitState, temperature, cTemp, tTemp } = this.state;
 
         this.setState({
             unitState: event.target.checked
@@ -326,9 +267,6 @@ class WeatherProvider extends Component {
         });
     };
     render() {
-        let { formatted } = this.state;
-        console.log(formatted);
-
         return (
             <WeatherContext.Provider
                 value={{

@@ -1,13 +1,11 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { WeatherContext } from "../context";
 import { FaArrowCircleLeft } from "react-icons/fa";
 import Skycons from "react-skycons";
 
 import Switch from "@material-ui/core/Switch";
-// import CardComponent from "./Card";
 
 import { makeStyles } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
@@ -15,8 +13,6 @@ import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Typography from "@material-ui/core/Typography";
-
-import Form from "./Form";
 
 const useStyles = makeStyles({
     card: {
@@ -42,22 +38,7 @@ const useStyles = makeStyles({
 });
 
 export default function Forecast() {
-    let formattedTemp;
-    {
-        useEffect(() => {
-            let formattedTemp = weeklyForecast.map(day => {
-                let temp = day.temperatureHigh;
-                temp = ((temp * 10) / 10).toFixed(1);
-
-                if (unitState) {
-                    temp = (temp - 32) * (5 / 9);
-                    temp = ((temp * 10) / 10).toFixed(1);
-                }
-                return temp;
-            });
-            console.log(formattedTemp);
-        });
-    }
+    //  console.log(formatted);
     const context = useContext(WeatherContext);
     const {
         temperature,
@@ -72,17 +53,44 @@ export default function Forecast() {
         handleUnitChange,
         weeklyForecast
     } = context;
+    const [formatted, setFormat] = useState(0);
+    let days = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
+    useEffect(() => {
+        setFormat(
+            weeklyForecast.slice(1).map((item, index) => {
+                let temp = item.temperatureHigh;
+                temp = ((temp * 10) / 10).toFixed(1);
+
+                if (unitState) {
+                    temp = (temp - 32) * (5 / 9);
+                    temp = ((temp * 10) / 10).toFixed(1);
+                }
+                let day = new Date(item.time * 1000);
+                day = days[day.getDay()];
+                let icon = item.icon;
+                icon = icon.toUpperCase().replace(/-/g, "_");
+                return (
+                    <li key={index}>
+                        <h4>{day}</h4>
+                        <div style={{ maxWidth: "75px", maxHeight: "75px" }}>
+                            <Skycons
+                                color="white"
+                                icon={icon}
+                                autoplay={true}
+                                style={{ width: "100%", height: "100%" }}
+                            />
+                        </div>
+
+                        <h4>
+                            {temp} {unit}
+                        </h4>
+                    </li>
+                );
+            })
+        );
+    }, [weeklyForecast, unitState, days, unit]);
 
     const classes = useStyles();
-    let days = [
-        "Sunday",
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday"
-    ];
 
     return (
         <div>
@@ -127,39 +135,21 @@ export default function Forecast() {
                 </CardContent>
 
                 <ExpansionPanel className={classes.expansion}>
-                    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                    <ExpansionPanelSummary
+                        expandIcon={
+                            <ExpandMoreIcon style={{ color: "white" }} />
+                        }
+                    >
                         <Typography component={"div"}>
-                            <h5> 7 Day Forecast </h5>
+                            <h5 style={{ fontWeight: "bold" }}>
+                                {" "}
+                                7 Day Forecast{" "}
+                            </h5>
                         </Typography>
                     </ExpansionPanelSummary>
-                    <ul className="week">
-                        {weeklyForecast.slice(1).map(day => {
-                            let weekDays = new Date(day.time * 1000);
-                            weekDays = days[weekDays.getDay()];
-                            let icon = day.icon;
-                            icon = icon.toUpperCase().replace(/-/g, "_");
-                            let temp = day.temperatureHigh;
-                            return (
-                                <li>
-                                    <h4> {weekDays}</h4>
-                                    <Skycons
-                                        color="white"
-                                        icon={icon}
-                                        autoplay={true}
-                                        style={{
-                                            width: "80%",
-                                            height: "80%"
-                                        }}
-                                    />
-                                    <h4>
-                                        {temp} {unit}
-                                    </h4>
-                                </li>
-                            );
-                        })}
-                    </ul>
-
-                    <ExpansionPanelDetails />
+                    <ExpansionPanelDetails>
+                        <ul className="week">{formatted}</ul>
+                    </ExpansionPanelDetails>
                 </ExpansionPanel>
             </Card>
         </div>
