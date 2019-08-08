@@ -133,7 +133,7 @@ class WeatherProvider extends Component {
             this.fetchWeather();
             this.fetchLocation();
         };
-        const errorFunc = error => {
+        const errorFunc = () => {
             alert("whoops, took a little to long, try again");
             window.location.reload();
         };
