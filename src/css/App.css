@@ -65,7 +65,9 @@ h1 {
 }
 .week {
     display: flex;
-    justify-content: space-between;
+    text-align: center;
+    align-items: baseline;
+    justify-content: center;
     width: 100%;
     list-style: none;
     padding: 0 20px;

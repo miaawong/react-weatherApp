@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import DarkSky from "./DarkSky";
+import { nullLiteral } from "@babel/types";
 
 const WeatherContext = React.createContext();
 
@@ -26,7 +27,8 @@ class WeatherProvider extends Component {
         tempDate: "",
         currentDate: "",
         timeZone: "",
-        weekday: ""
+        weekday: "",
+        weeklyForecast: []
     };
 
     // fetch weather from dark skies
@@ -54,12 +56,14 @@ class WeatherProvider extends Component {
                     summary: data.currently.summary,
                     tempIcon: data.currently.icon,
                     tempDate: data.currently.time,
-                    timeZone: data.timezone
+                    timeZone: data.timezone,
+                    weeklyForecast: data.daily.data
                 });
                 this.findDate();
                 this.findIcon();
-
-                console.log(data.timezone);
+                this.findWeek();
+                //   this.formatWeekly();
+                console.log(data.daily.data);
             })
             .catch(err => {
                 console.log("oops error occurred during fetchweather");
@@ -88,6 +92,66 @@ class WeatherProvider extends Component {
             weekday
         });
     };
+    formatWeekly = () => {
+        let days = [
+            "Sunday",
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday"
+        ];
+        let { unitState } = this.state;
+        let formattedTemp = this.state.weeklyForecast.map(day => {
+            let temp = day.temperatureHigh;
+            temp = ((temp * 10) / 10).toFixed(1);
+
+            // if (!unitState) {
+            //     temp = (temp - 32) * (5 / 9);
+            //     temp = ((temp * 10) / 10).toFixed(1);
+            // }
+            return temp;
+        });
+        console.log(formattedTemp);
+    };
+    findWeek = () => {
+        let {
+            weeklyForecast,
+            weekDays,
+            weekIcons,
+            weekTemps,
+            dayName
+        } = this.state;
+
+        let days = [
+            "Sunday",
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday"
+        ];
+
+        {
+            weekDays = [...weeklyForecast].slice(1).map(day => {
+                days = new Date(day.time * 1000);
+                days = days[days.getDay()];
+            });
+            // console.log(
+            //     (weekIcons = week.icon.toUpperCase().replace(/-/g, "_"))
+            // );
+            // weekTemps = week.temperatureHigh;
+        }
+        this.setState({
+            weekDays: [days]
+
+            // weekIcons,
+            // weekTemps
+        });
+    };
+
     findIcon = () => {
         let { tempIcon, icon } = this.state;
         icon = tempIcon.toUpperCase().replace(/-/g, "_");
@@ -235,7 +299,7 @@ class WeatherProvider extends Component {
     };
 
     handleUnitChange = event => {
-        let { unitState, temperature, cTemp, tTemp } = this.state;
+        let { unitState, temperature, cTemp, tTemp, temp } = this.state;
 
         this.setState({
             unitState: event.target.checked
@@ -245,16 +309,26 @@ class WeatherProvider extends Component {
             cTemp = ((cTemp * 10) / 10).toFixed(1);
             this.setState({
                 temperature: cTemp,
+                temp: cTemp,
                 unit: " °C"
             });
         } else
             this.setState({
                 temperature: tTemp,
+                temp: tTemp,
                 unit: " °F"
             });
     };
 
+    clearAll = () => {
+        this.setState({
+            temperature: null
+        });
+    };
     render() {
+        let { formatted } = this.state;
+        console.log(formatted);
+
         return (
             <WeatherContext.Provider
                 value={{
@@ -265,8 +339,8 @@ class WeatherProvider extends Component {
                     handleInputChange: this.handleInputChange,
                     search: this.search,
                     handleScript: this.handleScript,
-                    handlePlaceSelect: this.handlePlaceSelect,
-                    handleUnitChange: this.handleUnitChange
+                    handleUnitChange: this.handleUnitChange,
+                    clearAll: this.clearAll
                 }}
             >
                 {this.props.children}

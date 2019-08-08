@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { WeatherContext } from "../context";
 import { FaArrowCircleLeft } from "react-icons/fa";
 import Skycons from "react-skycons";
@@ -27,7 +27,6 @@ const useStyles = makeStyles({
         boxShadow: "0 0 10px 2px rgba(0,0,0,0.25)",
         borderRadius: "5px",
         margin: "0 ",
-        // justifyContent: "space-between",
         color: "white",
         flexWrap: "wrap",
         ["@media (max-width:780px)"]: {
@@ -43,6 +42,22 @@ const useStyles = makeStyles({
 });
 
 export default function Forecast() {
+    let formattedTemp;
+    {
+        useEffect(() => {
+            let formattedTemp = weeklyForecast.map(day => {
+                let temp = day.temperatureHigh;
+                temp = ((temp * 10) / 10).toFixed(1);
+
+                if (unitState) {
+                    temp = (temp - 32) * (5 / 9);
+                    temp = ((temp * 10) / 10).toFixed(1);
+                }
+                return temp;
+            });
+            console.log(formattedTemp);
+        });
+    }
     const context = useContext(WeatherContext);
     const {
         temperature,
@@ -51,15 +66,29 @@ export default function Forecast() {
         unit,
         location,
         currentDate,
-        weekday
+        weekday,
+        clearAll,
+        unitState,
+        handleUnitChange,
+        weeklyForecast
     } = context;
 
     const classes = useStyles();
+    let days = [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday"
+    ];
+
     return (
         <div>
             <Card className={classes.card}>
                 <div className="navbar">
-                    <FaArrowCircleLeft size={30} />
+                    <FaArrowCircleLeft size={30} onClick={clearAll} />
 
                     <h1> {location} </h1>
 
@@ -68,8 +97,8 @@ export default function Forecast() {
                             <label>
                                 °F
                                 <Switch
-                                // onChange={handleUnitChange}
-                                // checked={unitState}
+                                    onChange={handleUnitChange}
+                                    checked={unitState}
                                 />
                                 °C
                             </label>
@@ -103,17 +132,34 @@ export default function Forecast() {
                             <h5> 7 Day Forecast </h5>
                         </Typography>
                     </ExpansionPanelSummary>
-                    <ExpansionPanelDetails>
-                        <ul className="week">
-                            <li> Monday</li>
-                            <li> Tuesday</li>
-                            <li> Wednesday</li>
-                            <li> Thursday</li>
-                            <li> Friday</li>
-                            <li> Saturday</li>
-                            <li> Sunday</li>
-                        </ul>
-                    </ExpansionPanelDetails>
+                    <ul className="week">
+                        {weeklyForecast.slice(1).map(day => {
+                            let weekDays = new Date(day.time * 1000);
+                            weekDays = days[weekDays.getDay()];
+                            let icon = day.icon;
+                            icon = icon.toUpperCase().replace(/-/g, "_");
+                            let temp = day.temperatureHigh;
+                            return (
+                                <li>
+                                    <h4> {weekDays}</h4>
+                                    <Skycons
+                                        color="white"
+                                        icon={icon}
+                                        autoplay={true}
+                                        style={{
+                                            width: "80%",
+                                            height: "80%"
+                                        }}
+                                    />
+                                    <h4>
+                                        {temp} {unit}
+                                    </h4>
+                                </li>
+                            );
+                        })}
+                    </ul>
+
+                    <ExpansionPanelDetails />
                 </ExpansionPanel>
             </Card>
         </div>
