@@ -66,9 +66,17 @@ li {
 }
 .location {
     margin: 20px;
+    display: flex;
 }
 .switchBtn {
     float: right;
+}
+.unsplash {
+    margin: 0 20px;
+}
+.unsplash:hover {
+    color: black;
+    cursor: pointer;
 }
 
 .week {
@@ -79,6 +87,12 @@ li {
     width: 100%;
     list-style: none;
     padding: 0 0;
+}
+a {
+    color: white !important;
+}
+a:hover {
+    color: white !important;
 }
 /*  mobile  */
 

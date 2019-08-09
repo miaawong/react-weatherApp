@@ -26,7 +26,8 @@ class WeatherProvider extends Component {
         currentDate: "",
         timeZone: "",
         weekday: "",
-        weeklyForecast: []
+        weeklyForecast: [],
+        link: ""
     };
 
     // fetch weather from dark skies
@@ -196,6 +197,7 @@ class WeatherProvider extends Component {
             this.setState({
                 backgroundImg: json.results[randomNum],
                 img: json.results[randomNum].urls.regular,
+                link: json.results[randomNum].links.html,
                 loading: false
             });
         } catch (err) {

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { WeatherContext } from "../context";
-import { FaArrowCircleLeft } from "react-icons/fa";
+import { FaArrowCircleLeft, FaCamera } from "react-icons/fa";
 import Skycons from "react-skycons";
 
 import Switch from "@material-ui/core/Switch";
@@ -38,7 +38,6 @@ const useStyles = makeStyles({
 });
 
 export default function Forecast() {
-    //  console.log(formatted);
     const context = useContext(WeatherContext);
     const {
         temperature,
@@ -51,7 +50,8 @@ export default function Forecast() {
         clearAll,
         unitState,
         handleUnitChange,
-        weeklyForecast
+        weeklyForecast,
+        link
     } = context;
     const [formatted, setFormat] = useState(0);
     let days = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
@@ -89,7 +89,7 @@ export default function Forecast() {
                 );
             })
         );
-    }, [weeklyForecast, unitState, unit, days]);
+    }, []);
 
     const classes = useStyles();
 
@@ -116,7 +116,15 @@ export default function Forecast() {
                     </div>
                 </div>
                 <div className="location">
-                    <h1> {location} </h1>
+                    <h1>{location}</h1>
+                    <div className="unsplash">
+                        <FaCamera
+                            size={40}
+                            onClick={() => {
+                                window.open(`${link}`);
+                            }}
+                        />
+                    </div>
                 </div>
                 <CardContent>
                     <div>
