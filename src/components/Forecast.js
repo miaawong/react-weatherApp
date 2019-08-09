@@ -70,7 +70,7 @@ export default function Forecast() {
                 let icon = item.icon;
                 icon = icon.toUpperCase().replace(/-/g, "_");
                 return (
-                    <li key={index}>
+                    <li key={index} className="forecast">
                         <h4>{day}</h4>
                         <div style={{ maxWidth: "75px", maxHeight: "75px" }}>
                             <Skycons
@@ -116,9 +116,13 @@ export default function Forecast() {
                 <CardContent>
                     <div>
                         <h3>
-                            {weekday}, {currentDate}
+                            <li>{weekday}</li>
+                            <li>{currentDate}</li>
                         </h3>
-                        <h4> {summary}</h4>
+                        <h4>
+                            {" "}
+                            <strong>{summary}</strong>{" "}
+                        </h4>
                     </div>
 
                     <div className="tempRn">
