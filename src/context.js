@@ -133,15 +133,18 @@ class WeatherProvider extends Component {
             this.fetchWeather();
             this.fetchLocation();
         };
-        const errorFunc = () => {
+        const errorFunc = err => {
             alert("whoops, took a little to long, try again");
             window.location.reload();
+            console.log(err);
+        };
+        const options = {
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 0
         };
         let geolocation = navigator.geolocation;
-        geolocation.getCurrentPosition(getPosition, errorFunc, {
-            enableHighAccuracy: true,
-            timeout: 10000
-        });
+        geolocation.getCurrentPosition(getPosition, errorFunc, options);
     };
 
     // handle change when searchstring is changed
@@ -263,7 +266,8 @@ class WeatherProvider extends Component {
 
     clearAll = () => {
         this.setState({
-            temperature: null
+            temperature: null,
+            unitState: false
         });
     };
     render() {

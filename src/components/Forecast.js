@@ -55,6 +55,7 @@ export default function Forecast() {
     } = context;
     const [formatted, setFormat] = useState(0);
     let days = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
+    /* eslint-disable */
     useEffect(() => {
         setFormat(
             weeklyForecast.slice(1).map((item, index) => {
@@ -88,7 +89,7 @@ export default function Forecast() {
                 );
             })
         );
-    }, [weeklyForecast, unitState, days, unit]);
+    }, [weeklyForecast, unitState, unit, days]);
 
     const classes = useStyles();
 
@@ -96,10 +97,11 @@ export default function Forecast() {
         <div>
             <Card className={classes.card}>
                 <div className="navbar">
-                    <FaArrowCircleLeft size={30} onClick={clearAll} />
-
-                    <h1> {location} </h1>
-
+                    <FaArrowCircleLeft
+                        size={30}
+                        onClick={clearAll}
+                        style={{ float: "left" }}
+                    />{" "}
                     <div className="switchBtn">
                         {temperature ? (
                             <label>
@@ -112,6 +114,9 @@ export default function Forecast() {
                             </label>
                         ) : null}
                     </div>
+                </div>
+                <div className="location">
+                    <h1> {location} </h1>
                 </div>
                 <CardContent>
                     <div>

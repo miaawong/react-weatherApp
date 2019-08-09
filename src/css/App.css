@@ -46,9 +46,6 @@ button:hover {
     color: white;
     margin: 20px;
 }
-.navbar > * {
-    margin: 0 auto;
-}
 .tempRn {
     width: 100%;
     align-content: baseline;
@@ -59,13 +56,19 @@ button:hover {
 }
 h1 {
     font-weight: bolder;
-    font-size: 2rem;
+    font-size: 2.5rem;
 }
 li {
     list-style: none;
 }
 .temperature {
     font-size: 100px;
+}
+.location {
+    margin: 20px;
+}
+.switchBtn {
+    float: right;
 }
 
 .week {
@@ -91,7 +94,7 @@ li {
         width: 90%;
     }
     .switchBtn {
-        margin-top: 20px;
+        margin: 20px;
     }
     .button {
         margin-bottom: 20px;
@@ -104,9 +107,5 @@ li {
     .week {
         flex-wrap: wrap;
         justify-content: space-around;
-    }
-
-    h1 {
-        padding-top: 20px;
     }
 }
