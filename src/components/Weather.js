@@ -29,7 +29,6 @@ export default function Location() {
             {temperature} {unit}
             <br />
             {summary}
-            <Card>hello</Card>
         </div>
     );
 }
